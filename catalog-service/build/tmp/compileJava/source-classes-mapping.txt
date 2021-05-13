@@ -1,5 +1,0 @@
-com/example/catalog/controller/CatalogController.java
- com.example.catalog.controller.CatalogController
- com.example.catalog.controller.CatalogController$Product
-com/example/catalog/CatalogApplication.java
- com.example.catalog.CatalogApplication
