@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: orderModule
+          uri: http://localhost:9001/
+          predicates:
+            - Path=/api/v1/orders/**
+        - id: catalogModule
+          uri: http://localhost:9002/
+          predicates:
+            - Path=/api/v1/products/**
