@@ -2,9 +2,9 @@
 Spring cloud gateway example
 
 ### Run Application 
-Start order-service & catalog-service applications
+Start order-service, catalog-service and api-gateway applications in the same order.
 
-Order Service
+**Order Service**
 ```
 cd order-service
 
@@ -12,7 +12,7 @@ cd order-service
 gradlew.bat bootRun (windows)
 ```
 
-Catalog Service
+**Catalog Service**
 ```
 cd catalog-service
 
@@ -20,7 +20,7 @@ cd catalog-service
 gradlew.bat bootRun (windows)
 ```
 
-API-Gateway
+**API-Gateway**
 ```
 ./gradlew bootRun
 gradlew.bat bootRun (windows)
