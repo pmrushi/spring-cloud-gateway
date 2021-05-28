@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: catalog-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

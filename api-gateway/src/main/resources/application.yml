@@ -10,3 +10,12 @@ spring:
           uri: http://localhost:9002/
           predicates:
             - Path=/api/v1/products/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true

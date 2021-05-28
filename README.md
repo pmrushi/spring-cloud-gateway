@@ -64,4 +64,29 @@ Response
    }
 ]
 ```
+### Actuator health check
+```
+OrderServcie : http://localhost:9001/actuator/health
 
+CatalogServcie : http://localhost:9002/actuator/health
+
+ApuGateway : http://localhost:8080/actuator/health
+```
+
+
+### Services health check (Customized)
+ 
+GET - http://localhost:8080/actuator/services/status
+
+```
+[
+   {
+      "service":"http://localhost:9001/",
+      "status":"UP"
+   },
+   {
+      "service":"http://localhost:9002/",
+      "status":"DOWN"
+   }
+]
+```

@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: order-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
