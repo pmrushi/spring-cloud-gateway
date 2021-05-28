@@ -78,6 +78,7 @@ ApuGateway : http://localhost:8080/actuator/health
  
 GET - http://localhost:8080/actuator/services/status
 
+Response 
 ```
 [
    {
