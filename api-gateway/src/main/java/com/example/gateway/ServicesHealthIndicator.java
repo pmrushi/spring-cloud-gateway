@@ -1,5 +1,6 @@
 package com.example.gateway;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.boot.actuate.endpoint.web.annotation.RestControllerEndpoint;
 import org.springframework.boot.actuate.health.Status;
 import org.springframework.cloud.gateway.actuate.AbstractGatewayControllerEndpoint;
@@ -33,12 +34,36 @@ public class ServicesHealthIndicator extends AbstractGatewayControllerEndpoint {
     }
 
     @GetMapping("/status")
-    public @ResponseBody
-    ResponseEntity servicesHealthCheck() {
+    public @ResponseBody ResponseEntity servicesHealthCheck() {
+        List<ServiceStatus> serviceStatuses = getServicesHealth(configuredRoutes());
+        return new ResponseEntity<>(serviceStatuses, HttpStatus.OK);
+    }
+
+    @GetMapping("/status/all")
+    public @ResponseBody ResponseEntity allServicesConsolidatedHealthCheck() {
+        ServiceStatus consolidatedHealth = getAllServicesConsolidatedHealth(configuredRoutes());
+        return new ResponseEntity<>(consolidatedHealth, HttpStatus.OK);
+    }
+
+    private List<Route> configuredRoutes() {
         Mono<List<Route>> routeLocators = this.routeLocator.getRoutes().collectList();
         List<Route> routesList = new ArrayList<>();
         routeLocators.subscribe(routes -> routesList.addAll(routes));
-        return new ResponseEntity<>(getServicesHealth(routesList), HttpStatus.OK);
+        return routesList;
+    }
+
+    private ServiceStatus getAllServicesConsolidatedHealth(List<Route> routesList) {
+        ServiceStatus serviceStatus = new ServiceStatus();
+        serviceStatus.status = Status.UP.toString();
+        routesList.forEach(route -> {
+            URI uri = route.getUri();
+            ServiceStatus status = getStatus(uri);
+            if (status.status.equals(Status.DOWN.toString())) {
+                serviceStatus.status = Status.DOWN.toString();
+                return;
+            }
+        });
+        return serviceStatus;
     }
 
     private List<ServiceStatus> getServicesHealth(List<Route> routesList) {
@@ -61,6 +86,7 @@ public class ServicesHealthIndicator extends AbstractGatewayControllerEndpoint {
         }
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private static class ServiceStatus {
         public String service;
         public String status;

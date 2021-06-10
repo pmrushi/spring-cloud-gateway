@@ -75,8 +75,17 @@ ApuGateway : http://localhost:8080/actuator/health
 
 
 ### Services health check (Customized)
+
+Get all routes status
  
+```
 GET - http://localhost:8080/actuator/services/status
+```
+Get all routes consolidated status
+
+```
+GET - http://localhost:8080/actuator/services/status/all
+```
 
 Response 
 ```
